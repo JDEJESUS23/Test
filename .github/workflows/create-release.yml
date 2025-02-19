@@ -21,7 +21,7 @@ jobs:
         id: check_tag
         run: |
           if [[ ${{ github.ref }} != refs/tags/* ]]; then
-            echo "Not running on a tag. Exiting..."
+            echo "Not running on a tag. Exiting with conflict..."
             exit 1
           fi
 
