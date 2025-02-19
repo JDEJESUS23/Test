@@ -14,6 +14,17 @@ jobs:
     name: Release pushed tag
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if running on tag
+        id: check_tag
+        run: |
+          if [[ ${{ github.ref }} != refs/tags/* ]]; then
+            echo "Not running on a tag. Exiting..."
+            exit 1
+          fi
+
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
