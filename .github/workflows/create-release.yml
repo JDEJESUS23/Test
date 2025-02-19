@@ -49,3 +49,10 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
+  nextjob:
+    name: Next job
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print release status
+        run: echo "Release status: ${{ env.release_exists }}"
