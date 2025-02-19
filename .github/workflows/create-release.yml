@@ -13,6 +13,7 @@ jobs:
   release:
     name: Release pushed tag
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,7 +26,21 @@ jobs:
             exit 1
           fi
 
+      - name: Check for existing release
+        id: check_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY"; then
+            echo "release_exists=true" >> $GITHUB_ENV
+            echo "::warning::Release for tag $tag already exists. Skipping release creation."
+          else
+            echo "release_exists=false" >> $GITHUB_ENV
+          fi
+
       - name: Create release
+        if: env.release_exists == 'false'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
