@@ -17,11 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check if running on tag
+      - name: Check if running on tag for bugfix
         id: check_tag
         run: |
           if [[ ${{ github.ref }} != refs/tags/* ]]; then
-            echo "Not running on a tag. Exiting now..."
+            echo "Not running on a tag. Exiting now for bug fix..."
             exit 1
           fi
 
