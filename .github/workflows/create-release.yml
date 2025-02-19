@@ -55,4 +55,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print release status
-        run: echo "Release status: ${{ env.release_exists }}"
+        run: |
+          echo "Release status: ${{ env.release_exists }}"
